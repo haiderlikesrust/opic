@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
     }
 
     const amt = BigInt(amount);
-    if (amt <= 0n) {
+    if (amt <= BigInt(0)) {
       return NextResponse.json(
         { error: "amount must be greater than 0" },
         { status: 400 },
