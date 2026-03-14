@@ -1,0 +1,31 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Build
+.next
+out
+build
+dist
+
+# Env (secrets)
+.env
+.env.local
+.env.*.local
+
+# Debug
+npm-debug.log*
+.pnpm-debug.log*
+
+# Misc
+.DS_Store
+*.pem
+
+# Vercel
+.vercel
+
+# Prisma
+prisma/migrations/**/migration_lock.toml
+prisma/dev.db
+prisma/dev.db-journal

@@ -1,0 +1,46 @@
+{
+  "name": "the-oracle",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "prisma generate && next build",
+    "start": "next start",
+    "lint": "next lint",
+    "db:push": "prisma db push",
+    "db:studio": "prisma studio",
+    "worker": "npx tsx src/worker/run.ts",
+    "telegram": "npx tsx src/telegram-server/run.ts"
+  },
+  "dependencies": {
+    "@auth/prisma-adapter": "^2.7.2",
+    "@prisma/client": "^6.19.2",
+    "@pump-fun/agent-payments-sdk": "3.0.0",
+    "@solana/spl-token": "^0.4.9",
+    "@solana/wallet-adapter-react": "^0.15.35",
+    "@solana/wallet-adapter-react-ui": "^0.9.35",
+    "@solana/wallet-adapter-wallets": "^0.19.32",
+    "@solana/web3.js": "^1.98.0",
+    "dotenv": "^16.4.5",
+    "next": "15.0.3",
+    "next-auth": "^4.24.10",
+    "openai": "^4.77.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "redis": "^4.6.0",
+    "telegraf": "^4.16.3",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^9",
+    "eslint-config-next": "15.0.3",
+    "postcss": "^8",
+    "prisma": "^6.19.2",
+    "tailwindcss": "^3.4.1",
+    "tsx": "^4.19.0",
+    "typescript": "^5"
+  }
+}

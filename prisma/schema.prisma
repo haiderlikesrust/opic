@@ -1,0 +1,141 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String?   @unique
+  walletAddress String?   @unique
+  name          String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+  agents        Agent[]
+  subscriptions Subscription[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Agent {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name         String
+  tokenName    String
+  tokenMint    String
+  systemPrompt String
+  status       String   @default("draft")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  config       AgentConfig?
+  credentials  Credential[]
+  logs         AgentLog[]
+  subscriptions Subscription[]
+  conversationMessages ConversationMessage[]
+}
+
+model AgentConfig {
+  id                 String   @id @default(cuid())
+  agentId            String   @unique
+  agent              Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  personality        String?
+  tweetFrequency     String?
+  autoReplyRules     String?
+  mentionMonitoring  Boolean  @default(true)
+  memeGeneration     Boolean  @default(false)
+  communityEngagement String?
+  postingBehavior    String?
+  replyBehavior      String?
+  tradingRules       String?
+  onChainMonitoring  String?
+  customSettings     String?
+  telegramChatId    String?
+  updatedAt         DateTime @updatedAt
+}
+
+model Credential {
+  id        String   @id @default(cuid())
+  agentId   String
+  agent     Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  provider  String
+  encrypted String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@unique([agentId, provider])
+}
+
+model PendingSubscription {
+  id        String   @id @default(cuid())
+  agentId   String
+  userId    String
+  memo      String   @unique
+  amount    String
+  periodEnd DateTime
+  createdAt DateTime @default(now())
+}
+
+model Subscription {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  agentId     String
+  agent       Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  status      String   @default("active")
+  periodStart DateTime
+  periodEnd   DateTime
+  txSignature String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  @@unique([agentId])
+}
+
+model AgentLog {
+  id        String   @id @default(cuid())
+  agentId   String
+  agent     Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  level     String
+  action    String?
+  message   String
+  metadata  String?
+  createdAt DateTime @default(now())
+}
+
+model ConversationMessage {
+  id        String   @id @default(cuid())
+  agentId   String
+  chatId   String
+  role     String
+  content  String
+  createdAt DateTime @default(now())
+  agent     Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  @@index([agentId, chatId])
+}

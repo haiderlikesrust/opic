@@ -1,0 +1,14 @@
+.git
+.gitignore
+.next
+node_modules
+npm-debug.log
+yarn-error.log
+coverage
+.env
+.env.local
+.cursor
+agent-transcripts
+*.db
+*.db-journal
+*.log

@@ -1,0 +1,47 @@
+services:
+  web:
+    build: .
+    container_name: oracle-web
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: file:/app/data/prod.db
+      NEXTAUTH_URL: ${NEXTAUTH_URL:-http://localhost:3000}
+    command: sh -c "npx prisma db push && npm run start"
+    ports:
+      - "3000:3000"
+    volumes:
+      - oracle_data:/app/data
+
+  worker:
+    build: .
+    container_name: oracle-worker
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: file:/app/data/prod.db
+    command: sh -c "npx prisma db push && npm run worker"
+    volumes:
+      - oracle_data:/app/data
+    depends_on:
+      - web
+
+  telegram:
+    build: .
+    container_name: oracle-telegram
+    restart: unless-stopped
+    profiles: ["telegram"]
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: file:/app/data/prod.db
+    command: sh -c "npx prisma db push && npm run telegram"
+    volumes:
+      - oracle_data:/app/data
+    depends_on:
+      - web
+
+volumes:
+  oracle_data:

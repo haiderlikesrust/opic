@@ -1,0 +1,55 @@
+@import "@solana/wallet-adapter-react-ui/styles.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --oracle-bg: #090b12;
+  --oracle-surface: #121627;
+  --oracle-border: #252c3f;
+  --oracle-accent: #22d3a6;
+  --oracle-muted: #8a90a5;
+  --oracle-text: #eef2ff;
+}
+
+body {
+  background: radial-gradient(circle at 10% 0%, rgba(34, 211, 166, 0.12), transparent 28%),
+    radial-gradient(circle at 90% 10%, rgba(84, 168, 255, 0.12), transparent 32%),
+    var(--oracle-bg);
+  color: var(--oracle-text);
+  min-height: 100vh;
+  text-rendering: optimizeLegibility;
+}
+
+/* Wallet adapter overrides to match Oracle theme */
+.wallet-adapter-button {
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--oracle-surface) 85%, white 15%),
+    var(--oracle-surface)
+  ) !important;
+  border: 1px solid var(--oracle-border) !important;
+  color: var(--oracle-text) !important;
+  border-radius: 0.75rem !important;
+  font-weight: 600 !important;
+}
+.wallet-adapter-button:hover {
+  background: color-mix(in oklab, var(--oracle-surface) 65%, var(--oracle-border) 35%) !important;
+  border-color: var(--oracle-accent) !important;
+  color: var(--oracle-accent) !important;
+}
+.wallet-adapter-modal-wrapper {
+  background: var(--oracle-surface) !important;
+}
+.wallet-adapter-modal-title {
+  color: var(--oracle-text) !important;
+}
+.wallet-adapter-modal-list li button {
+  color: var(--oracle-text) !important;
+  border-radius: 0.5rem !important;
+}
+.wallet-adapter-modal-list li button:hover {
+  background: var(--oracle-border) !important;
+  color: var(--oracle-accent) !important;
+}
