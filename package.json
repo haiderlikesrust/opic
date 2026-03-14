@@ -10,7 +10,8 @@
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
     "worker": "npx tsx src/worker/run.ts",
-    "telegram": "npx tsx src/telegram-server/run.ts"
+    "telegram": "npx tsx src/telegram-server/run.ts",
+    "pay:agent": "npx tsx src/scripts/pay-agent.ts"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.2",
