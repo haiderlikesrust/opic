@@ -3,7 +3,7 @@ import { PublicKey } from "@solana/web3.js";
 import { PumpAgent } from "@pump-fun/agent-payments-sdk";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 
 const PLATFORM_MINT = process.env.PLATFORM_AGENT_MINT;
 const USDC_MINT = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
